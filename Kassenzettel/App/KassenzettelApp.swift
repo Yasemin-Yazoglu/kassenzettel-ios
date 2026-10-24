@@ -9,9 +9,14 @@ import SwiftUI
 
 @main
 struct KassenzettelApp: App {
+    @State private var auth = AuthModel()
+
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
+                .environment(auth)
+                .task { await auth.start() }
         }
     }
 }

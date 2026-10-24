@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		C15DE6D2308D3A4500E78DD2 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = C15DE6D1308D3A4500E78DD2 /* Supabase */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		C15DE6B4308D391600E78DD2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C15DE6D2308D3A4500E78DD2 /* Supabase in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +117,7 @@
 			);
 			name = Kassenzettel;
 			packageProductDependencies = (
+				C15DE6D1308D3A4500E78DD2 /* Supabase */,
 			);
 			productName = Kassenzettel;
 			productReference = C15DE6A6308D391300E78DD2 /* Kassenzettel.app */;
@@ -195,6 +201,9 @@
 			);
 			mainGroup = C15DE69D308D391300E78DD2;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				C15DE6D0308D3A4500E78DD2 /* XCRemoteSwiftPackageReference "supabase-swift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C15DE6A7308D391300E78DD2 /* Products */;
 			projectDirPath = "";
@@ -570,6 +579,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C15DE6D0308D3A4500E78DD2 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase/supabase-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C15DE6D1308D3A4500E78DD2 /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C15DE6D0308D3A4500E78DD2 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C15DE69E308D391300E78DD2 /* Project object */;
 }
