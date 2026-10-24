@@ -25,20 +25,18 @@ struct DemoView: View {
                             .foregroundStyle(.secondary)
                             .multilineTextAlignment(.center)
                     } else {
-                        VStack(spacing: 8) {
-                            ForEach(demo.expenses.reversed()) { expense in
-                                HStack {
-                                    Text(expense.store)
-                                    Spacer()
-                                    Text(Money.format(cents: expense.amountCents))
-                                }
-                            }
-                        }
+                        YearCardsView(expenses: demo.expenses)
                     }
                 }
                 .padding()
             }
             .navigationTitle("kassenzettel")
+            .navigationDestination(for: Int.self) { year in
+                MonthsView(
+                    year: year,
+                    expenses: demo.expenses.filter { $0.year == year }
+                )
+            }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Anmelden") { showLogin = true }
