@@ -28,6 +28,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C12C861A308E1D13008E10DC /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		C12C861B308E1D13008E10DC /* Debug.example.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.example.xcconfig; sourceTree = "<group>"; };
+		C12C861C308E1D13008E10DC /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
+		C12C861D308E1D13008E10DC /* Release.example.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.example.xcconfig; sourceTree = "<group>"; };
 		C15DE6A6308D391300E78DD2 /* Kassenzettel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kassenzettel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C15DE6B3308D391600E78DD2 /* KassenzettelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KassenzettelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C15DE6BD308D391600E78DD2 /* KassenzettelUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KassenzettelUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -77,9 +81,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C12C861E308E1D13008E10DC /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				C12C861A308E1D13008E10DC /* Debug.xcconfig */,
+				C12C861B308E1D13008E10DC /* Debug.example.xcconfig */,
+				C12C861C308E1D13008E10DC /* Release.xcconfig */,
+				C12C861D308E1D13008E10DC /* Release.example.xcconfig */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
 		C15DE69D308D391300E78DD2 = {
 			isa = PBXGroup;
 			children = (
+				C12C861E308E1D13008E10DC /* Config */,
 				C15DE6A8308D391300E78DD2 /* Kassenzettel */,
 				C15DE6B6308D391600E78DD2 /* KassenzettelTests */,
 				C15DE6C0308D391600E78DD2 /* KassenzettelUITests */,
@@ -280,6 +296,7 @@
 /* Begin XCBuildConfiguration section */
 		C15DE6C5308D391600E78DD2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C12C861A308E1D13008E10DC /* Debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -343,6 +360,7 @@
 		};
 		C15DE6C6308D391600E78DD2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C12C861C308E1D13008E10DC /* Release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -399,6 +417,7 @@
 		};
 		C15DE6C8308D391600E78DD2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C12C861A308E1D13008E10DC /* Debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -406,6 +425,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Config/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -430,6 +450,7 @@
 		};
 		C15DE6C9308D391600E78DD2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C12C861C308E1D13008E10DC /* Release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -437,6 +458,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Config/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -461,6 +483,7 @@
 		};
 		C15DE6CB308D391600E78DD2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C12C861A308E1D13008E10DC /* Debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -482,6 +505,7 @@
 		};
 		C15DE6CC308D391600E78DD2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C12C861C308E1D13008E10DC /* Release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -503,6 +527,7 @@
 		};
 		C15DE6CE308D391600E78DD2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C12C861A308E1D13008E10DC /* Debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -522,6 +547,7 @@
 		};
 		C15DE6CF308D391600E78DD2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C12C861C308E1D13008E10DC /* Release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;

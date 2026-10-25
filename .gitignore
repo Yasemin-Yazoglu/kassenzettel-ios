@@ -5,3 +5,5 @@ build/
 DerivedData/
 .swiftpm/
 *.xcodeproj/project.xcworkspace/xcuserdata/
+Config/Debug.xcconfig
+Config/Release.xcconfig
