@@ -15,12 +15,11 @@ struct ExpenseFormView: View {
     @State private var amountText = ""
 
     private var amountCents: Int? {
-        guard let euros = Money.parse(amountText), euros > 0 else { return nil }
-        return Money.cents(fromEuros: euros)
+        ExpenseInput.amountCents(from: amountText)
     }
 
     private var canSubmit: Bool {
-        !store.trimmingCharacters(in: .whitespaces).isEmpty && amountCents != nil
+        ExpenseInput.store(store) != nil && amountCents != nil
     }
 
     var body: some View {
@@ -47,8 +46,8 @@ struct ExpenseFormView: View {
     }
 
     private func submit() {
-        guard let cents = amountCents else { return }
-        onSubmit(store.trimmingCharacters(in: .whitespaces), cents, date)
+        guard let name = ExpenseInput.store(store), let cents = amountCents else { return }
+        onSubmit(name, cents, date)
         store = ""
         amountText = ""
     }

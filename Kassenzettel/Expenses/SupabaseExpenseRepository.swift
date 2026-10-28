@@ -45,4 +45,25 @@ struct SupabaseExpenseRepository: ExpenseRepository {
         guard let expense = Expense(row: row) else { throw ExpenseError.invalidData }
         return expense
     }
+    
+    func update(id: UUID, store: String, amountCents: Int) async throws -> Expense {
+        let row: ExpenseRow = try await supabase
+            .from("expense")
+            .update(UpdateExpenseRow(store: store, amountCents: amountCents))
+            .eq("id", value: id.uuidString)
+            .select(columns)
+            .single()
+            .execute()
+            .value
+        guard let expense = Expense(row: row) else { throw ExpenseError.invalidData }
+        return expense
+    }
+
+    func delete(id: UUID) async throws {
+        try await supabase
+            .from("expense")
+            .delete()
+            .eq("id", value: id.uuidString)
+            .execute()
+    }
 }

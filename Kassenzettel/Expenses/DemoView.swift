@@ -36,5 +36,6 @@ struct DemoView: View {
                 AuthView(initialMode: mode)
             }
         }
+        .errorAlert(model)
     }
 }

@@ -35,4 +35,11 @@ enum Money {
         guard let number = formatter.number(from: text) as? NSDecimalNumber else { return nil }
         return number.decimalValue
     }
+    
+    /// Cent → "19,99" fürs Eingabefeld
+    static func editableString(cents: Int, locale: Locale = .current) -> String {
+        euros(fromCents: cents).formatted(
+            .number.locale(locale).grouping(.never).precision(.fractionLength(2))
+        )
+    }
 }

@@ -28,4 +28,17 @@ final class InMemoryExpenseRepository: ExpenseRepository {
         expenses.insert(expense, at: 0)
         return expense
     }
+    
+    func update(id: UUID, store: String, amountCents: Int) async throws -> Expense {
+        guard let index = expenses.firstIndex(where: { $0.id == id }) else {
+            throw ExpenseError.invalidData
+        }
+        expenses[index].store = store
+        expenses[index].amountCents = amountCents
+        return expenses[index]
+    }
+
+    func delete(id: UUID) async throws {
+        expenses.removeAll { $0.id == id }
+    }
 }
