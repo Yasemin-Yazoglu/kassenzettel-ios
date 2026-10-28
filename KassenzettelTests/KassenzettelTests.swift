@@ -5,32 +5,67 @@
 //  Created by Yasemin Yazoglu on 24.10.26.
 //
 
-import XCTest
+import Foundation
+import Testing
 @testable import Kassenzettel
 
-final class KassenzettelTests: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+@MainActor
+struct MoneyTests {
+    @Test func convertsEurosToCentsWithoutFloatDrift() {
+        #expect(Money.cents(fromEuros: Decimal(string: "19.99")!) == 1999)
+        #expect(Money.cents(fromEuros: Decimal(string: "0.29")!) == 29)
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    @Test func parsesGermanInput() {
+        let parsed = Money.parse("19,99", locale: Locale(identifier: "de_DE"))
+        #expect(parsed == Decimal(string: "19.99"))
+    }
+}
+
+@MainActor
+struct PeriodAggregationTests {
+    private func date(_ year: Int, _ month: Int, _ day: Int) -> Date {
+        PeriodAggregation.calendar.date(from: DateComponents(year: year, month: month, day: day))!
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    private func expense(_ year: Int, _ month: Int, _ day: Int, cents: Int) -> Expense {
+        Expense(id: UUID(), store: "Test", amountCents: cents, year: year, month: month, day: day)
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    @Test func monthGroupsDaysIntoIsoWeeks() {
+        let expenses = [
+            expense(2026, 3, 1, cents: 1000),
+            expense(2026, 3, 2, cents: 500),
+            expense(2026, 3, 31, cents: 250),
+            expense(2026, 2, 28, cents: 999),   // außerhalb des Monats
+            expense(2026, 4, 1, cents: 999),    // außerhalb des Monats
+        ]
+        let points = PeriodAggregation.buckets(expenses, period: .month, anchor: date(2026, 3, 15))
+
+        #expect(points.map(\.label) == ["KW 9", "KW 10", "KW 11", "KW 12", "KW 13", "KW 14"])
+        #expect(points.map(\.totalCents) == [1000, 500, 0, 0, 0, 250])
+        #expect(points.map(\.count) == [1, 1, 0, 0, 0, 1])
     }
 
+    @Test func weekStartsOnMondayAndHasSevenDays() {
+        let anchor = date(2026, 10, 28)   // ein Mittwoch
+        let range = PeriodAggregation.periodRange(for: .week, anchor: anchor)
+        let points = PeriodAggregation.buckets([expense(2026, 10, 28, cents: 700)], period: .week, anchor: anchor)
+
+        #expect(range.start == date(2026, 10, 26))
+        #expect(points.count == 7)
+        #expect(points[2].totalCents == 700)
+    }
+
+    @Test func yearHasTwelveMonths() {
+        let points = PeriodAggregation.buckets([expense(2026, 12, 24, cents: 300)], period: .year, anchor: date(2026, 6, 1))
+        #expect(points.count == 12)
+        #expect(points[11].totalCents == 300)
+    }
+
+    @Test func cannotNavigateIntoTheFuture() {
+        let today = date(2026, 10, 28)
+        #expect(!PeriodAggregation.canGoNext(period: .month, anchor: today, today: today))
+        #expect(PeriodAggregation.canGoNext(period: .month, anchor: date(2026, 9, 15), today: today))
+    }
 }
