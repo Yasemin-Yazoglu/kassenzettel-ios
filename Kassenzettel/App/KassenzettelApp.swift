@@ -17,6 +17,9 @@ struct KassenzettelApp: App {
             RootView()
                 .environment(auth)
                 .task { await auth.start() }
+                .onOpenURL { url in
+                    Task { await auth.handle(url: url) }
+                }
         }
     }
 }

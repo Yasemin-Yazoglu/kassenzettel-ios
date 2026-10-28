@@ -5,6 +5,18 @@
 	<key>SUPABASE_HOST</key>
 	<string>$(SUPABASE_HOST)</string>
 	<key>SUPABASE_PUBLISHABLE_KEY</key>
-	<string>$(SUPABASE_PUBLISHABLE_KEY)</string>
+    <string>$(SUPABASE_PUBLISHABLE_KEY)</string>
+
+    <key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>kassenzettel.auth</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>kassenzettel</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

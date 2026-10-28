@@ -8,6 +8,8 @@
 import Foundation
 
 enum AppConfig {
+    static let authCallbackURL = URL(string: "kassenzettel://auth-callback")!
+
     static let supabaseURL: URL = {
         let host = value(for: "SUPABASE_HOST")
         guard let url = URL(string: "https://\(host)") else {
