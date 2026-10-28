@@ -32,6 +32,15 @@ struct ExpensesContentView: View {
             .padding()
         }
         .refreshable { await model.load() }
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                NavigationLink {
+                    AnalyticsView(model: model)
+                } label: {
+                    Label("Analytics", systemImage: "chart.xyaxis.line")
+                }
+            }
+        }
         .navigationDestination(for: Int.self) { year in
             MonthsView(year: year, model: model)
         }
