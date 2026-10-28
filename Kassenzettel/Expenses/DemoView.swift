@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DemoView: View {
     @State private var demo = DemoStore()
-    @State private var showLogin = false
+    @State private var authMode: AuthView.Mode?
 
     var body: some View {
         NavigationStack {
@@ -27,6 +27,9 @@ struct DemoView: View {
                     } else {
                         YearCardsView(expenses: demo.expenses)
                     }
+
+                    Button("Konto erstellen") { authMode = .signUp }
+                        .buttonStyle(.borderedProminent)
                 }
                 .padding()
             }
@@ -39,11 +42,11 @@ struct DemoView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Anmelden") { showLogin = true }
+                    Button("Anmelden") { authMode = .signIn }
                 }
             }
-            .sheet(isPresented: $showLogin) {
-                LoginView()
+            .sheet(item: $authMode) { mode in
+                AuthView(initialMode: mode)
             }
         }
     }
