@@ -18,12 +18,6 @@ struct ExpensesContentView: View {
                     Task { await model.add(store: name, amountCents: cents, date: date) }
                 }
 
-                if let message = model.errorMessage {
-                    Text(message)
-                        .font(.footnote)
-                        .foregroundStyle(.red)
-                }
-
                 if model.isLoading && model.expenses.isEmpty {
                     ProgressView()
                 } else if model.expenses.isEmpty {
@@ -39,10 +33,24 @@ struct ExpensesContentView: View {
         }
         .refreshable { await model.load() }
         .navigationDestination(for: Int.self) { year in
-            MonthsView(
-                year: year,
-                expenses: model.expenses.filter { $0.year == year }
+            MonthsView(year: year, model: model)
+        }
+    }
+}
+
+extension View {
+    /// Zeigt `errorMessage` des Models als Warnung an.
+    func errorAlert(_ model: ExpensesModel) -> some View {
+        alert(
+            "Fehler",
+            isPresented: Binding(
+                get: { model.errorMessage != nil },
+                set: { if !$0 { model.errorMessage = nil } }
             )
+        ) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(model.errorMessage ?? "")
         }
     }
 }

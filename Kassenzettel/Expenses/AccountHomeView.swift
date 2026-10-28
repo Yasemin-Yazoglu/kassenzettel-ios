@@ -25,5 +25,6 @@ struct AccountHomeView: View {
             }
         }
         .task { await model.load() }
+        .errorAlert(model)
     }
 }

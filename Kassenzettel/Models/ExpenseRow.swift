@@ -35,6 +35,16 @@ nonisolated struct NewExpenseRow: Encodable {
     }
 }
 
+nonisolated struct UpdateExpenseRow: Encodable {
+    let store: String
+    let amountCents: Int
+
+    enum CodingKeys: String, CodingKey {
+        case store
+        case amountCents = "amount_cents"
+    }
+}
+
 extension Expense {
     /// Der einzige Ort, der eine DB-Zeile in das UI-Modell umwandelt.
     init?(row: ExpenseRow) {
