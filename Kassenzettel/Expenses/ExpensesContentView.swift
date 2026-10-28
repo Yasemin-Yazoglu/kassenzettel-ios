@@ -1,0 +1,48 @@
+//
+//  ExpensesContentView.swift
+//  Kassenzettel
+//
+//  Created by Yasemin Yazoglu on 28.10.26.
+//
+
+import SwiftUI
+
+struct ExpensesContentView: View {
+    let model: ExpensesModel
+    let emptyHint: String
+
+    var body: some View {
+        ScrollView {
+            VStack(spacing: 24) {
+                ExpenseFormView { name, cents, date in
+                    Task { await model.add(store: name, amountCents: cents, date: date) }
+                }
+
+                if let message = model.errorMessage {
+                    Text(message)
+                        .font(.footnote)
+                        .foregroundStyle(.red)
+                }
+
+                if model.isLoading && model.expenses.isEmpty {
+                    ProgressView()
+                } else if model.expenses.isEmpty {
+                    Text(emptyHint)
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.center)
+                } else {
+                    YearCardsView(expenses: model.expenses)
+                }
+            }
+            .padding()
+        }
+        .refreshable { await model.load() }
+        .navigationDestination(for: Int.self) { year in
+            MonthsView(
+                year: year,
+                expenses: model.expenses.filter { $0.year == year }
+            )
+        }
+    }
+}

@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Supabase
 
 struct RootView: View {
     @Environment(AuthModel.self) private var auth
@@ -14,11 +13,8 @@ struct RootView: View {
     var body: some View {
         if auth.isLoading {
             ProgressView()
-        } else if let session = auth.session {
-            VStack(spacing: 16) {
-                Text("Eingeloggt als \(session.user.email ?? "")")
-                Button("Abmelden") { Task { await auth.logout() } }
-            }
+        } else if auth.session != nil {
+            AccountHomeView()
         } else {
             DemoView()
         }
