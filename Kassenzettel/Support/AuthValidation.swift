@@ -21,4 +21,12 @@ enum AuthValidation {
         }
         return nil
     }
+    
+    static func changePasswordProblem(current: String, new: String, confirm: String) -> String? {
+        if current.isEmpty { return "Bitte gib dein aktuelles Passwort ein." }
+        if let problem = passwordProblem(new) { return problem }
+        if new != confirm { return "Die Passwörter stimmen nicht überein." }
+        if new == current { return "Das neue Passwort muss sich vom aktuellen unterscheiden." }
+        return nil
+    }
 }

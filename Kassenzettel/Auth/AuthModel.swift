@@ -49,4 +49,26 @@ final class AuthModel {
     func logout() async {
         try? await supabase.auth.signOut(scope: .local)
     }
+    
+    func changePassword(currentPassword: String, newPassword: String) async throws {
+        guard let email = session?.user.email else { throw AccountError.notSignedIn }
+
+        // Erst das aktuelle Passwort beweisen lassen, dann ersetzen.
+        // Das funktioniert unabhängig davon, ob das Projekt "current password" verlangt.
+        do {
+            try await supabase.auth.signIn(email: email, password: currentPassword)
+        } catch let error as AuthError where error.errorCode.rawValue == "invalid_credentials" {
+            throw AccountError.wrongCurrentPassword
+        }
+        try await supabase.auth.update(user: UserAttributes(password: newPassword))
+    }
+
+    func deleteAccount() async throws {
+        try await supabase.functions.invoke(
+            "delete-account",
+            options: FunctionInvokeOptions(method: .post)
+        )
+        // Die Sitzung ist serverseitig schon weg; lokal aufräumen.
+        try? await supabase.auth.signOut(scope: .local)
+    }
 }
