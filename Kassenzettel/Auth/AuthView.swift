@@ -80,6 +80,23 @@ struct AuthView: View {
             }
             .buttonStyle(.borderedProminent)
             .disabled(isBusy || email.isEmpty || password.isEmpty)
+            
+            HStack {
+                VStack { Divider() }
+                Text("oder")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                VStack { Divider() }
+            }
+
+            Button {
+                Task { await signInWithGoogle() }
+            } label: {
+                Text("Mit Google fortfahren")
+                    .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.bordered)
+            .disabled(isBusy)
 
             Spacer()
         }
@@ -133,6 +150,20 @@ struct AuthView: View {
             // Bei Erfolg wechselt RootView von selbst, das Sheet verschwindet dabei.
         } catch {
             errorMessage = AuthErrorMessage.text(for: error)
+        }
+    }
+    
+    private func signInWithGoogle() async {
+        errorMessage = nil
+        isBusy = true
+        defer { isBusy = false }
+
+        do {
+            try await auth.signInWithGoogle()
+        } catch {
+            if !AuthErrorMessage.isCancellation(error) {
+                errorMessage = AuthErrorMessage.text(for: error)
+            }
         }
     }
 }

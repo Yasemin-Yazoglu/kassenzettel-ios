@@ -1,4 +1,5 @@
 import Auth
+import AuthenticationServices
 import Foundation
 
 enum AuthErrorMessage {
@@ -25,5 +26,9 @@ enum AuthErrorMessage {
             }
         }
         return "Etwas ist schiefgelaufen. Bitte versuche es erneut."
+    }
+    
+    static func isCancellation(_ error: Error) -> Bool {
+        (error as? ASWebAuthenticationSessionError)?.code == .canceledLogin
     }
 }
