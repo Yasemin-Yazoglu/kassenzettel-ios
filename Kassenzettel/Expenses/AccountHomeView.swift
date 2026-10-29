@@ -20,7 +20,11 @@ struct AccountHomeView: View {
             .navigationTitle("kassenzettel")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Abmelden") { Task { await auth.logout() } }
+                    NavigationLink {
+                        AccountView()
+                    } label: {
+                        Label("Konto", systemImage: "person.crop.circle")
+                    }
                 }
             }
         }
