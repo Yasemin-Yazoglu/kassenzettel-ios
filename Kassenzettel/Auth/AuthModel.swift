@@ -71,4 +71,12 @@ final class AuthModel {
         // Die Sitzung ist serverseitig schon weg; lokal aufräumen.
         try? await supabase.auth.signOut(scope: .local)
     }
+    
+    func signInWithGoogle() async throws {
+        _ = try await supabase.auth.signInWithOAuth(
+            provider: .google,
+            redirectTo: AppConfig.authCallbackURL,
+            queryParams: [(name: "prompt", value: "select_account")]
+        )
+    }
 }
